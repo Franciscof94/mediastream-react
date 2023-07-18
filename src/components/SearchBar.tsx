@@ -5,6 +5,8 @@ import { setFilters } from "../store/features/movieSlice";
 
 interface Props {
   genres: [{ value: string; label: string }];
+
+  genre: string
 }
 
 const customStyles = {
@@ -18,7 +20,7 @@ const customStyles = {
   }),
 };
 
-export const SearchBar: FC<Props> = ({ genres }) => {
+export const SearchBar: FC<Props> = ({ genres, genre }) => {
   const [orderBy, setOrderBy] = useState(false);
 
   const dispatch = useAppDispatch();
@@ -30,6 +32,7 @@ export const SearchBar: FC<Props> = ({ genres }) => {
           className="w-full"
           name="genre"
           options={genres}
+          value={{ value: genre, label: genre  || 'Select...'}}
           onChange={(value) => {
             dispatch(setFilters({ type: "genre", name: value?.value as any }));
           }}

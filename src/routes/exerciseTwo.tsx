@@ -45,13 +45,13 @@ const ExerciseTwo = () => {
     >
       <h1 className=" text-[2em] mb-4 font-bold">Movie Library</h1>
       <div className="max-w-[1375px]">
-        <SearchBar genres={genres} />
+        <SearchBar genres={genres} genre={genre}/>
         {loading ? (
           <Spinner />
         ) : (
           <ul className="grid grid-cols-4 gap-[4.25rem] mt-16">
-            {moviesListExerciseTwo.map((movie) => (
-              <MovieList movie={movie} />
+            {moviesListExerciseTwo.map((movie, index) => (
+              <MovieList movie={movie} key={index} />
             ))}
           </ul>
         )}
