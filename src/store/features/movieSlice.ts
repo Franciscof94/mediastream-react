@@ -52,28 +52,11 @@ export const fetchAllMoviesExerciseTwo = createAsyncThunk(
 
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/movies${
-          genre || orderBy ? "" : "?_limit=50"
-        }`
+        `${process.env.REACT_APP_API_URL}/movies?_limit=50${
+          genre ? `&genres_like=${genre}` : ""
+        }${orderBy ? `&_sort=year&_order=${orderBy}` : ""}`
       );
       let movies = await response.json();
-      if (genre) {
-        movies = movies.filter((movie: IMovieInfo) =>
-          movie.genres.includes(genre)
-        );
-      }
-
-      if (orderBy) {
-        if (orderBy === "ASC") {
-          movies.sort(
-            (a: IMovieInfo, b: IMovieInfo) => Number(a.year) - Number(b.year)
-          );
-        } else if (orderBy === "DESC") {
-          movies.sort(
-            (a: IMovieInfo, b: IMovieInfo) => Number(b.year) - Number(a.year)
-          );
-        }
-      }
 
       return movies;
     } catch (error) {
